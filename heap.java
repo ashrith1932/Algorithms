@@ -14,7 +14,9 @@ public class heap {
         heaparray[++size] = x;
         int curr = size;
         int parent = (curr-1) /2;
-        while(curr>=0&&heaparray[parent]>heaparray[curr]){int temp = heaparray[parent];heaparray[parent] = heaparray[curr];heaparray[curr]=temp;curr = parent;parent = (curr-1) /2;}
+        while(curr>=0&&heaparray[parent]>heaparray[curr])
+        {int temp = heaparray[parent];heaparray[parent] = heaparray[curr];
+         heaparray[curr]=temp;curr = parent;parent = (curr-1) /2;}
     } //TimeComplexity - O(logn),for all n elements then O(nlogn)
 
     void extractmin(){
@@ -80,3 +82,4 @@ public class heap {
         h1.display();
     }
 }
+
