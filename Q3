@@ -44,3 +44,36 @@ int main() {
     return 0;
 }
 
+
+#include <stdio.h>
+
+void swap(int *a, int *b) { int t = *a; *a = *b; *b = t; }
+
+int main() {
+    int n;
+    printf("Enter number of meetings: ");
+    scanf("%d", &n);
+
+    int start[n], end[n];
+    for (int i = 0; i < n; i++) {
+        printf("Enter start and end time of meeting %d: ", i+1);
+        scanf("%d %d", &start[i], &end[i]);
+    }
+
+    for (int i = 0; i < n-1; i++)
+        for (int j = 0; j < n-i-1; j++)
+            if (end[j] > end[j+1]) {
+                swap(&end[j], &end[j+1]);
+                swap(&start[j], &start[j+1]);
+            }
+
+    printf("\nSelected meetings:\n");
+    int lastEnd = 0;
+    for (int i = 0; i < n; i++) {
+        if (start[i] >= lastEnd) {
+            printf("Meeting %d: (%d, %d)\n", i+1, start[i], end[i]);
+            lastEnd = end[i];
+        }
+    }
+    return 0;
+}
