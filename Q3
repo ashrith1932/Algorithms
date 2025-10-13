@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Ad {
+    int time;
+    int profit;
+};
+
+float profitPerUnit(struct Ad x) {
+    return (float)x.profit / (float)x.time;
+}
+
+int compare(const void *a, const void *b) {
+    struct Ad *ad1 = (struct Ad *)a;
+    struct Ad *ad2 = (struct Ad *)b;
+    float r1 = (float)ad1->profit / ad1->time;
+    float r2 = (float)ad2->profit / ad2->time;
+    if (r1 < r2) return 1;  // descending order
+    else if (r1 > r2) return -1;
+    else return 0;
+}
+
+float fractional_knapsack(struct Ad arr[], int n, int time) {
+    qsort(arr, n, sizeof(struct Ad), compare);
+    float profit = 0;
+    for (int i = 0; i < n; i++) {
+        if (arr[i].time <= time) {
+            profit += arr[i].profit;
+            time -= arr[i].time;
+        } else {
+            profit += profitPerUnit(arr[i]) * time;
+            break;
+        }
+    }
+    return profit;
+}
+
+int main() {
+    struct Ad arr[] = { {10,100}, {20,50}, {30,100}, {5,25} };
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int time = 180;
+    float total = fractional_knapsack(arr, n, time);
+    printf("Maximum profit: %f\n", total);
+    return 0;
+}
+
